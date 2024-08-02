@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+
+/* CustomNavbar.css */
+.my-cart,
+.my-logout {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
