@@ -1,7 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = 5000;
 const mongoDB = require('./db');
+
+// Call mongoDB to connect to the database
 mongoDB();
 
 app.use(express.json());
