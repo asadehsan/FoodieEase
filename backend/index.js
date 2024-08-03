@@ -7,7 +7,7 @@ mongoDB();
 
 app.use(express.json());
 
-const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000';
+const corsOrigin = process.env.CORS_ORIGIN;
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', corsOrigin);
