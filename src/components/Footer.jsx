@@ -10,7 +10,7 @@ export default function Footer() {
             <Link to="/" className="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
 
             </Link>
-            <span className="mb-3 mb-md-0 text-muted">© 2023 NeoFood, Inc</span>
+            <span className="mb-3 mb-md-0 text-muted">© 2024 FoodieEase, Inc</span>
           </div>
 
         </footer>

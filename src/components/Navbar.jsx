@@ -7,8 +7,9 @@ import { useCart } from './ContextReducer';
 
 export default function CustomNavbar() {
   const [cartView, setCartView] = useState(false);
-  let data = useCart();
+  const data = useCart();
   const navigate = useNavigate();
+  const isAuthenticated = !!localStorage.getItem("authToken");
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
@@ -19,10 +20,6 @@ export default function CustomNavbar() {
     margin: '0 5px',
   };
 
-  const navLinkStyle = {
-    paddingLeft: '10px',
-  };
-
   return (
     <Navbar bg="success" expand="lg">
       <Navbar.Brand className="fs-1 fst-italic pl-3" as={Link} to="/">
@@ -31,20 +28,20 @@ export default function CustomNavbar() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto flex-grow-1">
-          <Nav.Link as={Link} to="/" className="nav-link active fs-5" style={navLinkStyle}>
+          <Nav.Link as={Link} to="/" className="nav-link active fs-5">
             Home
           </Nav.Link>
-          {localStorage.getItem("authToken") && (
-            <Nav.Link as={Link} to="/myOrder" className="nav-link active fs-5" style={navLinkStyle}>
+          {isAuthenticated && (
+            <Nav.Link as={Link} to="/myOrder" className="nav-link active fs-5">
               My Orders
             </Nav.Link>
           )}
         </Nav>
-        {localStorage.getItem("authToken") ? (
-          <>
-            <div className="d-flex d-lg-none justify-content-center w-100">
+        <div className="d-none d-lg-flex align-items-center ml-auto">
+          {isAuthenticated && (
+            <>
               <div
-                className="btn bg-white text-success"
+                className="btn bg-white text-success mx-2"
                 style={buttonStyle}
                 onClick={() => setCartView(true)}
               >
@@ -52,38 +49,58 @@ export default function CustomNavbar() {
                 <Badge pill bg="danger"> {data.length} </Badge>
               </div>
               <div
-                className="btn bg-white text-danger"
+                className="btn bg-white text-danger mx-2"
                 style={buttonStyle}
                 onClick={handleLogout}
               >
                 Logout
               </div>
-            </div>
-            {cartView && <Modal onClose={() => setCartView(false)}><Cart /></Modal>}
-            <div className="btn bg-white text-success mx-2 d-none d-lg-block" onClick={() => setCartView(true)}>
-              My Cart {""}
-              <Badge pill bg="danger"> {data.length} </Badge>
-            </div>
-            <div className="btn bg-white text-danger mx-2 d-none d-lg-block" onClick={handleLogout}>
-              Logout
-            </div>
-          </>
-        ) : (
-          <div className="d-flex d-lg-none justify-content-center w-100">
-            <Nav.Link as={Link} to="/login" className="btn bg-white text-success" style={buttonStyle}>
-              Login
-            </Nav.Link>
-            <Nav.Link as={Link} to="/createuser" className="btn bg-white text-success" style={buttonStyle}>
-              SignUp
-            </Nav.Link>
-          </div>
-        )}
+            </>
+          )}
+          {!isAuthenticated && (
+            <>
+              <Nav.Link as={Link} to="/login" className="btn bg-white text-success mx-2">
+                Login
+              </Nav.Link>
+              <Nav.Link as={Link} to="/createuser" className="btn bg-white text-success mx-2">
+                SignUp
+              </Nav.Link>
+            </>
+          )}
+        </div>
+        <div className="d-flex d-lg-none justify-content-center w-100 mt-2">
+          {isAuthenticated && (
+            <>
+              <div
+                className="btn bg-white text-success mx-2"
+                style={buttonStyle}
+                onClick={() => setCartView(true)}
+              >
+                My Cart {""}
+                <Badge pill bg="danger"> {data.length} </Badge>
+              </div>
+              <div
+                className="btn bg-white text-danger mx-2"
+                style={buttonStyle}
+                onClick={handleLogout}
+              >
+                Logout
+              </div>
+            </>
+          )}
+          {!isAuthenticated && (
+            <>
+              <Nav.Link as={Link} to="/login" className="btn bg-white text-success mx-2">
+                Login
+              </Nav.Link>
+              <Nav.Link as={Link} to="/createuser" className="btn bg-white text-success mx-2">
+                SignUp
+              </Nav.Link>
+            </>
+          )}
+        </div>
+        {cartView && <Modal onClose={() => setCartView(false)}><Cart /></Modal>}
       </Navbar.Collapse>
     </Navbar>
   );
 }
-
-
-
-
-
