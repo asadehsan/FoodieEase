@@ -10,8 +10,6 @@ import { CartProvider } from "./components/ContextReducer";
 import MyOrder from "./screens/MyOrder.js";
 
 
-setInterval(reloadWebsite, interval);
-
 
 function App() {
   return (
